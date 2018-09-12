@@ -4,6 +4,7 @@ import re
 import datetime
 import math
 
+
 # A pattern to match the word toesies, and only the single word toesies.
 pattern = re.compile(r'\b[T|t][O|Ò|Ó|Ô|Õ|Ö|o|ò|ó|ô|õ|ö|ᴑ|о][E|È|É|Ê|Ë|e|è|é|ê|ë][S|s][I|Ì|Í|Î|Ï|i|ì|í|î|ï}[E|È|É|Ê|Ë|e|è|é|ê|ë][S|Ś|Š|s|ś|š]?\b')
 pattern = re.compile(r'\b[T|t][O|Ò|Ó|Ô|Õ|Ö|o|ò|ó|ô|õ|ö|ᴑ|о][E|È|É|Ê|Ë|e|è|é|ê|ë][S|Ś|Š|ś|š|s]?\b')
@@ -105,25 +106,25 @@ async def on_message(message):
 
     if (hasattr(message.author, 'server_permissions')):
         permission = message.author.server_permissions
-        if message.content.startswith('!tbsilence') and permission.administrator:
-            await client.send_message(message.channel, "Ok {}, I'll be quiet now. use '!tbalert' to wake me back up!".format(message.author.mention))
+        if message.content.startswith('!vtsilence') and permission.administrator:
+            await client.send_message(message.channel, "Ok {}, I'll be quiet now. use '!vtalert' to wake me back up!".format(message.author.mention))
             awake[serverId] = False
             writeTimesToFile()
-        elif message.content.startswith('!tbalert') and permission.administrator:
+        elif message.content.startswith('!vtalert') and permission.administrator:
             await client.send_message(message.channel, "Ok {}, I'm scanning now.".format(message.author.mention))
             awake[serverId] = True
             writeTimesToFile()
-    if message.content.startswith('!vtsilence') or message.content.startswith('!tbalert'):
+    if message.content.startswith('!vtsilence') or message.content.startswith('!vtalert'):
         pass
-    elif message.content.startswith('!tbhelp'):
-        await client.send_message(message.channel, "You can ask me how long we've made it with '!tb'.\n If you're an admin you can silence me with '!vtsilence' and wake me back up with '!vtalert'")
-    elif message.content.startswith('!tb'):
+    elif message.content.startswith('!vthelp'):
+        await client.send_message(message.channel, "You can ask me how long we've made it with '!vt'.\n If you're an admin you can silence me with '!vtsilence' and wake me back up with '!vtalert'")
+    elif message.content.startswith('!vt'):
         await client.send_message(message.channel, 'The server has gone {}{}{}{} without mentioning the forbidden word.'.format(dt, ht, mt, st))
     if ((pattern.search(message.content) is not None) and (message.author.id != client.user.id)):
         serverAndDate[serverId] = currentTime
         writeTimesToFile()
         print ("{}::: {} lasted {} seconds.".format(currentTime, serverId, (currentTime - lastMention[serverId]).total_seconds()))
-        if (awake[serverId] and (currentTime - lastMention[serverId]).total_seconds() >= 1):
+        if (awake[serverId] and (currentTime - lastMention[serverId]).total_seconds() >= 1800):
             await client.send_message(message.channel, '{} referenced the forbidden word, setting the counter back to 0. I\'ll wait a half hour before warning you again.\n The server went {}{}{}{} without mentioning it.'.format(message.author.mention, dt, ht, mt, st))
             lastMention[serverId] = currentTime
 
