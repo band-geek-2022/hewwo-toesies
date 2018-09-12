@@ -5,7 +5,7 @@ import datetime
 import math
 
 # A pattern to match the word toesies, and only the single word toesies.
-pattern = re.compile(r'\b[T|t][O|Ò|Ó|Ô|Õ|Ö|o|ò|ó|ô|õ|ö|ᴑ|о][E|È|É|Ê|Ë|e|è|é|ê|ë][S|s][I|i|ï}[E|È|É|Ê|Ë|e|è|é|ê|ë][S|s]?\b')
+pattern = re.compile(r'\b[T|t][O|Ò|Ó|Ô|Õ|Ö|o|ò|ó|ô|õ|ö|ᴑ|о][E|È|É|Ê|Ë|e|è|é|ê|ë][S|s][I|Ì|Í|Î|Ï|i|ì|í|î|ï}[E|È|É|Ê|Ë|e|è|é|ê|ë][S|s]?\b')
 serverAndDate = {}
 botStartup = datetime.datetime.now()
 lastMention = {}
